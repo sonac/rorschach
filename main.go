@@ -18,8 +18,14 @@ var paths []string
 var debug *bool
 
 func init() {
+  debug = flag.Bool("d", false, "enable debug log level")
+  flag.Parse()
+
   readConfig()
-  log.Println(paths)
+  
+  if *debug {
+    log.Println(paths)
+  }
 }
 
 func readConfig() {
@@ -42,9 +48,6 @@ func readConfig() {
 }
 
 func main() {
-  debug = flag.Bool("d", false, "enable debug log level")
-  flag.Parse()
-
   ctx, cancel := context.WithCancel(context.Background())
   sigCh := make(chan os.Signal)
   signal.Notify(sigCh, os.Interrupt, syscall.SIGTERM)
