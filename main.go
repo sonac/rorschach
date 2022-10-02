@@ -33,7 +33,12 @@ func readConfig() {
     log.Fatal(err)
   }
 
-  paths = strings.Split(string(configData), "\n")
+  rawPaths := strings.Split(string(configData), "\n")
+  for _, p := range rawPaths {
+    if p != "" {
+      paths = append(paths, p)
+    } 
+  } 
 }
 
 func main() {
