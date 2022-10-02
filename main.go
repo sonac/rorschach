@@ -19,6 +19,7 @@ var debug *bool
 
 func init() {
   readConfig()
+  log.Println(paths)
 }
 
 func readConfig() {
