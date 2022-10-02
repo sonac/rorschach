@@ -52,6 +52,8 @@ func main() {
   sigCh := make(chan os.Signal)
   signal.Notify(sigCh, os.Interrupt, syscall.SIGTERM)
 
+  pull()
+
   var wg sync.WaitGroup
 
   wg.Add(2)
@@ -92,6 +94,14 @@ func pushWorker(wg *sync.WaitGroup, ctx context.Context) {
       log.Println("doing regular push")
       push()
     }
+  }
+}
+
+func pull() {
+  log.Println("performing initial pull on the start")
+  pullCmd := []string{"git", "pull"}
+  for _, p := range paths {
+    execCommand(pullCmd, p)
   }
 }
 
